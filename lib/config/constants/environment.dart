@@ -6,4 +6,7 @@ class Environment {
 
   static String theMovieDBAPI =
       dotenv.env['THE_MOVIEDB_URL'] ?? 'No hay api url';
+
+  static String theMovieDBImages =
+      dotenv.env['THE_MOVIEDB_URL_IMAGES'] ?? 'No hay api images url';
 }
