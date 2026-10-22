@@ -30,12 +30,16 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     super.initState();
     ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
     ref.read(popularMoviesProvider.notifier).loadNextPage();
+    ref.read(topRatedMoviesProvider.notifier).loadNextPage();
+    ref.read(upcomingMoviesProvider.notifier).loadNextPage();
   }
 
   @override
   Widget build(BuildContext context) {
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
     final popularMovies = ref.watch(popularMoviesProvider);
+    final upComingMovies = ref.watch(upcomingMoviesProvider);
+    final topRatedMovies = ref.watch(topRatedMoviesProvider);
     final slideShowMovies = ref.watch(moviesSlideShowProvider);
 
     return CustomScrollView(
@@ -60,12 +64,11 @@ class _HomeViewState extends ConsumerState<_HomeView> {
                 ),
 
                 MovieHorizontalListView(
-                  movies: nowPlayingMovies,
+                  movies: upComingMovies,
                   title: 'Próximamente',
                   subTitle: 'En este mes',
-                  loadNextPage: () => ref
-                      .read(nowPlayingMoviesProvider.notifier)
-                      .loadNextPage(),
+                  loadNextPage: () =>
+                      ref.read(upcomingMoviesProvider.notifier).loadNextPage(),
                 ),
 
                 MovieHorizontalListView(
@@ -77,12 +80,11 @@ class _HomeViewState extends ConsumerState<_HomeView> {
                 ),
 
                 MovieHorizontalListView(
-                  movies: nowPlayingMovies,
+                  movies: topRatedMovies,
                   title: 'Mejor calificadas',
                   subTitle: 'Desde siempre',
-                  loadNextPage: () => ref
-                      .read(nowPlayingMoviesProvider.notifier)
-                      .loadNextPage(),
+                  loadNextPage: () =>
+                      ref.read(topRatedMoviesProvider.notifier).loadNextPage(),
                 ),
 
                 SizedBox(height: 10),

@@ -11,6 +11,14 @@ final popularMoviesProvider = NotifierProvider<MoviesNotifier, List<Movie>>(
   () => MoviesNotifier((repo) => repo.getPopular),
 );
 
+final upcomingMoviesProvider = NotifierProvider<MoviesNotifier, List<Movie>>(
+  () => MoviesNotifier((repo) => repo.getUpcoming),
+);
+
+final topRatedMoviesProvider = NotifierProvider<MoviesNotifier, List<Movie>>(
+  () => MoviesNotifier((repo) => repo.getTopRated),
+);
+
 typedef MovieCallback = Future<List<Movie>> Function({int page});
 
 class MoviesNotifier extends Notifier<List<Movie>> {
