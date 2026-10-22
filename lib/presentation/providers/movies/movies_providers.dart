@@ -1,21 +1,30 @@
 import 'package:cinemapedia/domain/entities/movie.dart';
+import 'package:cinemapedia/domain/repositories/movies_repository.dart';
 import 'package:cinemapedia/presentation/providers/movies/movies_repository_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final nowPlayingMoviesProvider = NotifierProvider<MoviesNotifier, List<Movie>>(
-  MoviesNotifier.new,
+  () => MoviesNotifier((repo) => repo.getNowPlaying),
+);
+
+final popularMoviesProvider = NotifierProvider<MoviesNotifier, List<Movie>>(
+  () => MoviesNotifier((repo) => repo.getPopular),
 );
 
 typedef MovieCallback = Future<List<Movie>> Function({int page});
 
 class MoviesNotifier extends Notifier<List<Movie>> {
+  MoviesNotifier(this._selectFetch);
+
+  final MovieCallback Function(MoviesRepository repo) _selectFetch;
+
   int currentPage = 0;
   bool isLoading = false;
   late final MovieCallback fetchMoreMovies;
 
   @override
   List<Movie> build() {
-    fetchMoreMovies = ref.watch(movieRepositoryProvider).getNowPlaying;
+    fetchMoreMovies = _selectFetch(ref.watch(movieRepositoryProvider));
     return [];
   }
 
