@@ -17,8 +17,10 @@ class MovieMapper {
     popularity: moviedb.popularity,
     posterPath: moviedb.posterPath != ''
         ? Environment.theMovieDBImages + moviedb.posterPath
-        : 'no-poster',
-    releaseDate: moviedb.releaseDate,
+        : 'https://americandurafilm.com/wp-content/uploads/2022/06/No-Image-Placeholder.png',
+    releaseDate: moviedb.releaseDate != null
+        ? moviedb.releaseDate!
+        : DateTime.now(),
     title: moviedb.title,
     video: moviedb.video,
     voteAverage: moviedb.voteAverage,
