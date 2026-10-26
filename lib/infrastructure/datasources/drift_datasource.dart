@@ -1,5 +1,4 @@
-import 'package:cinemapedia/domain/datasources/local_storage_datasource.dart';
-import 'package:cinemapedia/domain/entities/movie.dart';
+import 'package:cinemapedia/domain/domain.dart';
 
 class DriftDatasource extends LocalStorageDatasource {
   @override
