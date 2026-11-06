@@ -27,11 +27,14 @@ class MoviesNotifier extends Notifier<List<Movie>> {
 
   int currentPage = 0;
   bool isLoading = false;
-  late final MovieCallback fetchMoreMovies;
+  // late final MovieCallback fetchMoreMovies;
+
+  MovieCallback get _fetchMoreMovies =>
+      _selectFetch(ref.read(movieRepositoryProvider));
 
   @override
   List<Movie> build() {
-    fetchMoreMovies = _selectFetch(ref.watch(movieRepositoryProvider));
+    // fetchMoreMovies = _selectFetch(ref.watch(movieRepositoryProvider));
     return [];
   }
 
@@ -39,7 +42,7 @@ class MoviesNotifier extends Notifier<List<Movie>> {
     if (isLoading) return;
     isLoading = true;
     currentPage++;
-    final List<Movie> movies = await fetchMoreMovies(page: currentPage);
+    final List<Movie> movies = await _fetchMoreMovies(page: currentPage);
     state = [...state, ...movies];
     await Future.delayed(Duration(milliseconds: 300));
     isLoading = false;

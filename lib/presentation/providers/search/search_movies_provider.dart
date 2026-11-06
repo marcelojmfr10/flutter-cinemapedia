@@ -23,16 +23,18 @@ final searchedMoviesProvider =
 typedef SearchMoviesCallback = Future<List<Movie>> Function(String query);
 
 class SearchedMoviesNotifier extends Notifier<List<Movie>> {
-  late final SearchMoviesCallback searchMovies;
+  // late final SearchMoviesCallback searchMovies;
+
+  MoviesRepository get _moviesRepository => ref.read(movieRepositoryProvider);
 
   @override
   List<Movie> build() {
-    searchMovies = ref.watch(movieRepositoryProvider).searchMovies;
+    // searchMovies = ref.watch(movieRepositoryProvider).searchMovies;
     return [];
   }
 
   Future<List<Movie>> searchMoviesByQuery(String query) async {
-    final List<Movie> movies = await searchMovies(query);
+    final List<Movie> movies = await _moviesRepository.searchMovies(query);
     ref.read(searchQueryProvider.notifier).update(query);
 
     state = movies;
