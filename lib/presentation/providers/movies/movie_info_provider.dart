@@ -2,7 +2,7 @@ import 'package:cinemapedia/domain/domain.dart';
 import 'package:cinemapedia/presentation/providers/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-typedef GetMovieCallback = Future<Movie> Function(String movieId);
+// typedef GetMovieCallback = Future<Movie> Function(String movieId);
 
 final movieInfoProvider =
     NotifierProvider<MovieMapNotifier, Map<String, Movie>>(
@@ -10,18 +10,20 @@ final movieInfoProvider =
     );
 
 class MovieMapNotifier extends Notifier<Map<String, Movie>> {
-  late final GetMovieCallback getMovie;
+  // late final GetMovieCallback getMovie;
+
+  MoviesRepository get _moviesRepository => ref.read(movieRepositoryProvider);
 
   @override
   Map<String, Movie> build() {
-    getMovie = ref.watch(movieRepositoryProvider).getMovieById;
+    // getMovie = ref.watch(movieRepositoryProvider).getMovieById;
     return {};
   }
 
   Future<void> loadMovie(String movieId) async {
     if (state[movieId] != null) return;
 
-    final movie = await getMovie(movieId);
+    final movie = await _moviesRepository.getMovieById(movieId);
 
     state = {...state, movieId: movie};
   }
