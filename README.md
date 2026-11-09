@@ -18,3 +18,9 @@ Para cambiar el ícono:
 ```
 dart run flutter_launcher_icons
 ```
+
+Para cambiar el splash screen
+
+```
+dart run flutter_native_splash:create
+```
